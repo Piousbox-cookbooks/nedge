@@ -1,0 +1,8 @@
+Host stash.nexenta.com
+	Hostname stash.nexenta.com
+	User git
+	IdentityFile ~/.ssh/git-identity
+	CheckHostIP no
+	StrictHostKeyChecking no
+	UserKnownHostsFile=/dev/null
+
