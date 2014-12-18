@@ -48,21 +48,17 @@ template "#{path}/etc/corosync/corosync.conf" do
 end
 
 # set the mtu && enable ipv6
-script "ifconfig #{override_interface} mtu 9000" do
+execute "ifconfig #{override_interface} mtu 9000" do
   user 'root'
 end
-script "sysctl net.ipv6.conf.all.disable_ipv6=0" do
+execute "sysctl net.ipv6.conf.all.disable_ipv6=0" do
   user 'root'
 end
 
 # restart corosync
-script "restart corosync" do
+execute "restart corosync" do
   command "#{path}/etc/init.d/corosync restart"
   user 'root'
 end
-
-puts! 'blah'
-
-
 
 
