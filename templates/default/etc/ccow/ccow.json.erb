@@ -1,0 +1,15 @@
+{
+  "tenant" : {
+    "hash_type" : 1,
+    "failure_domain" : <%= @failure_domain %>,
+    "join_delay" : 10000,
+    "verify_chid" : 1
+  },
+  "network" : {
+    "broker_interfaces" : "<%= @override_interface %>",
+    "broker_port" : 50005,
+    "mc_ttl" : 4,
+    "server_ip6addr" : "::1",
+    "server_port" : 10400
+  }
+}
