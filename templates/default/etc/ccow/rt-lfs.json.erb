@@ -1,0 +1,12 @@
+{
+  "devices": [
+    <% for i in (1..@n_devices) %>
+    {
+      "name": "store<%= i %>",
+      "path": "/data/store<%= i %>",
+      "device": "/dev/sdb",
+      "verify_chid": 1
+    }<% if i != @n_devices %>,<% end %>
+    <% end %>
+  ]
+}

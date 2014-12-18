@@ -1,5 +1,5 @@
 
-def puts! arg, label
+def puts! arg, label=''
   puts "+++ +++ #{label}"
   puts arg.inspect
 end
@@ -30,6 +30,33 @@ execute "git clone" do
   not_if "test -d #{path}"
 end
 
-# make clean && make install
+# make clean install
+if File.exist?("#{path}/.deploy-dev")
+  make_clean = 'make clean'
+else
+  make_clean = 'echo \"skipping make clean because file .deploy-dev is absent.\"'
+end
+unless File.exist?( "#{path}/install" )
+  if nedge_app['enable_address_sanitizer']
+    execute "make install" do
+      cwd path
+      command ". #{path}env.sh && #{make_clean} && make install"
+    end
+  else
+    execute "make install" do
+      cwd path
+      command ". #{path}/env.sh && #{make_clean} && make NEDGE_NDEBUG=1 install"
+    end
+    execute "compile ccow" do
+      cwd "#{path}/src/ccow"
+      command ". #{path}/env.sh && ./configure --prefix=#{path} --disable-address-sanitizer && make -j88"
+    end
+  end
+  script "#{path}/scripts/dev/nedge-dev-cleanup.sh"
+  execute "npm install" do
+    cwd "#{path}/src/nmf"
+    command ". #{path}/env.sh && npm install"
+  end
+end
 
-# 
+
