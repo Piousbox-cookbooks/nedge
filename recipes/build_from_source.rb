@@ -8,11 +8,9 @@ nedge_app = data_bag_item( 'nexenta', 'nedge' )
 path = nedge_app['path']
 path = '/' == path[path.length-1] ? path[0...(path.length-1)] : path # remove final slash
 user = nedge_app['user']
-# user_dir = 'root' == user ? '/root' : "/home/#{user}"
 user_dir = Dir.home( user )
+sudo = nedge_app['use_sudo'] ? 'sudo ' : '' # put 'sudo' there in the string to run commands as sudo.
 
-# put 'sudo' there in the string to run commands as sudo.
-sudo = nedge_app['use_sudo'] ? 'sudo ' : ''
 
 # check out the repo
 cookbook_file "#{user_dir}/.ssh/config" do
