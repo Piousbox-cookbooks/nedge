@@ -38,7 +38,7 @@ unless File.exist?( "#{path}/install" )
   if nedge_app['enable_address_sanitizer']
     execute "make install" do
       cwd path
-      command ". #{path}env.sh && #{make_clean} && make install"
+      command ". #{path}/env.sh && #{make_clean} && make install"
     end
   else
     execute "make install" do
@@ -56,3 +56,4 @@ unless File.exist?( "#{path}/install" )
     command ". #{path}/env.sh && npm install"
   end
 end
+

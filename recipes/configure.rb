@@ -18,6 +18,7 @@ failure_domain = node['nedge']['failure_domain'] || 0
 for i in 1..nedge_app['n_devices']
   directory "/data/store#{i}" do
     action :create
+    recursive true
   end
 end
 
