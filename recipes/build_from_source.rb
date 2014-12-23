@@ -24,7 +24,7 @@ cookbook_file "#{user_dir}/.ssh/id_rsa_stash_nexenta_com" do
 end
 execute "git clone" do
   cwd path[0...path.rindex('/')]
-  command "#{sudo} git clone ssh://git@stash.nexenta.com:7999/ned/nedge.git"
+  command "#{sudo} git clone #{nedge_app['repository']}"
   not_if "test -d #{path}"
 end
 
@@ -56,5 +56,3 @@ unless File.exist?( "#{path}/install" )
     command ". #{path}/env.sh && npm install"
   end
 end
-
-

@@ -16,11 +16,11 @@ if File.exist?( "#{path}/.do_not_restart" )
   execute "Not (re-)starting services because file #{path}/.do_not_restart is present."
 else
   execute "Do nefstart" do
-    command ". #{path}/env.sh && k && k && k && sleep 4 && 
+    command ". #{path}/env.sh && #{path}/scripts/dev/gw-kill.sh ; #{path}/scripts/dev/gw-kill.sh ; sleep 4 ;
              rm -rf /data/*/* ; rm -rf /data/*/.* ;
-             #{path}/src/ccow/test/cluster_test && 
              CCOW_LOG_LEVEL=4 CCOW_LOG_COLORS=1 #{path}/src/nmf/nefstart -a & 
-             echo 'Sleeping 10sec...' && sleep 10"
+             echo 'Sleeping 10sec...' ; sleep 10 ;
+             #{path}/src/ccow/test/cluster_test -n "
     user 'root'
   end
   # Enable all workers
