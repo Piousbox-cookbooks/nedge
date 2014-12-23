@@ -62,4 +62,9 @@ execute "restart corosync" do
   user 'root'
 end
 
-
+# generate ver/run/
+directory "#{path}/var/run" do
+  action :create
+  recursive true
+end
+execute "touch #{path}/var/run/serverid.cache"

@@ -50,7 +50,7 @@ unless File.exist?( "#{path}/install" )
       command ". #{path}/env.sh && ./configure --prefix=#{path} --disable-address-sanitizer && make -j88"
     end
   end
-  script "#{path}/scripts/dev/nedge-dev-cleanup.sh"
+  execute "#{path}/scripts/dev/nedge-dev-cleanup.sh"
   execute "npm install" do
     cwd "#{path}/src/nmf"
     command ". #{path}/env.sh && npm install"
