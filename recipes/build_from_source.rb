@@ -11,6 +11,11 @@ user = nedge_app['user']
 user_dir = Dir.home( user )
 sudo = nedge_app['use_sudo'] ? 'sudo ' : '' # put 'sudo' there in the string to run commands as sudo.
 
+## prevent massive timeout
+## does this make in hang?
+# execute "echo \"no_lazy_load true\" >> /etc/chef/client.rb" do
+#   not_if "cat /etc/chef/client.rb | grep no_lazy_load"
+# end
 
 # check out the repo
 cookbook_file "#{user_dir}/.ssh/config" do

@@ -27,6 +27,7 @@ template "#{path}/etc/ccow/rt-lfs.json" do
   variables({
               :n_devices => nedge_app['n_devices']
             })
+  owner 'root'
 end
 template "#{path}/etc/ccow/ccow.json" do
   source "etc/ccow/ccow.json.erb"
@@ -34,18 +35,21 @@ template "#{path}/etc/ccow/ccow.json" do
               :failure_domain => failure_domain,
               :override_interface => override_interface
             })
+  owner 'root'
 end
 template "#{path}/etc/ccow/ccowd.json" do
   source "etc/ccow/ccowd.json.erb"
   variables({
               :override_interface => override_interface
             })
+  owner 'root'
 end
 template "#{path}/etc/corosync/corosync.conf" do
   source "etc/corosync/corosync.conf.erb"
   variables({
               :override_interface => override_interface
             })
+  owner 'root'
 end
 
 # set the mtu && enable ipv6
