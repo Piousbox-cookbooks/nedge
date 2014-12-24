@@ -50,14 +50,14 @@ else
             HEREDOC
     user 'root'
   end
-  execute 'sleep 12'
   # Enable all workers
+  # This does not work for some reason...
   node['nedge']['workers'].each do |worker_name|
-    execute "enable worker #{worker_name}" do
+    bash "enable worker #{worker_name}" do
       cwd path
-      command <<-HEREDOC
-               sleep 3 && source #{path}/env.sh && #{path}/src/nmf/nefadm enable #{worker_name}
-              HEREDOC
+      code <<-HEREDOC
+               source #{path}/env.sh && echo "blahblah" # #{path}/src/nmf/nefadm enable #{worker_name}
+            HEREDOC
       user 'root'
     end
   end
@@ -65,6 +65,4 @@ else
     user 'root'
   end
 end
-
-puts! 'ok'
 
