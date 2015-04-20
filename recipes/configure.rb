@@ -8,6 +8,26 @@ def puts! arg, label=''
   puts arg.inspect
 end
 
+#
+# From: https://gist.github.com/mrunalp/9629571
+# Get IP address for an interface in ruby.
+#
+require 'socket'
+require 'ipaddr'
+# From ioctls.h
+SIOCGIFADDR    = 0x8915
+def ip_address(iface)
+    sock = UDPSocket.new
+    buf = [iface,""].pack('a16h16')
+    sock.ioctl(SIOCGIFADDR, buf);
+    sock.close
+    buf[20..24].unpack("CCCC").join(".")
+end 
+#puts ip_address('em1')
+#puts ip_address(override_interface)
+
+
+
 nedge_app = data_bag_item 'nexenta', 'nedge'
 path = nedge_app['path']
 path = '/' == path[path.length-1] ? path[0...(path.length-1)] : path # remove final slash
@@ -47,7 +67,8 @@ end
 template "#{path}/etc/corosync/corosync.conf" do
   source "etc/corosync/corosync.conf.erb"
   variables({
-              :override_interface => override_interface
+              :override_interface => override_interface,
+              :nodeid => ip_address(override_interface).split(".")[3] # the last hex of that IP
             })
   owner 'root'
 end

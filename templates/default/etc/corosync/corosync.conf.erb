@@ -39,7 +39,7 @@ totem {
 	# However, if the IP address is IPv6, this mechanism can not be used
 	# and you must manually specify a 'nodeid'. A 'nodeid' of '0' is
 	# reserved and must not be used.
-	nodeid: 1
+	nodeid: <%= @nodeid %>
  
 	# This defined the size of the maximum transfer unit in bytes. The
 	# default is 1500. If you want to use jumbo frames, frames larger than
