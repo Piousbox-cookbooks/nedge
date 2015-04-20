@@ -20,7 +20,8 @@ else
   execute "kill screens if any" do
     command " screen -ls | grep nedge_screen | cut -d. -f1 | awk '{print $1}' | xargs kill "
     user 'root'
-    not_if { 0 == `screen -ls | grep nedge_screen | cut -d. -f1 | awk '{print $1}' | wc -w` }
+    # only if such screen exists
+    not_if "if test x`screen -ls | grep nedge_screen | cut -d. -f1 | awk '{print $1}' | wc -w` = x0; then true; fi"
   end
   execute "Do nef cleanup" do
     command <<-HEREDOC

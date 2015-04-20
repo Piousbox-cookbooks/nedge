@@ -49,6 +49,7 @@ template "#{path}/etc/ccow/rt-lfs.json" do
             })
   owner 'root'
 end
+
 template "#{path}/etc/ccow/ccow.json" do
   source "etc/ccow/ccow.json.erb"
   variables({
@@ -57,6 +58,7 @@ template "#{path}/etc/ccow/ccow.json" do
             })
   owner 'root'
 end
+
 template "#{path}/etc/ccow/ccowd.json" do
   source "etc/ccow/ccowd.json.erb"
   variables({
@@ -64,11 +66,19 @@ template "#{path}/etc/ccow/ccowd.json" do
             })
   owner 'root'
 end
+
+template "#{path}/etc/ccow/auditd.ini" do
+  source "etc/ccow/auditd.ini.erb"
+  variables({})
+  owner 'root'
+end
+
+nodeid = ip_address(override_interface).split(".")[3] # the last hex of that IP
 template "#{path}/etc/corosync/corosync.conf" do
   source "etc/corosync/corosync.conf.erb"
   variables({
               :override_interface => override_interface,
-              :nodeid => ip_address(override_interface).split(".")[3] # the last hex of that IP
+              :nodeid => nodeid
             })
   owner 'root'
 end
