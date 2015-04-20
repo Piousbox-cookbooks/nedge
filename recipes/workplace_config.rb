@@ -26,6 +26,7 @@ else
   end
   execute "adding .bashrc-nedge to .bashrc" do
     command ' echo "source #{user_dir}/.bashrc-nedge" >> #{user_dir}/.bashrc '
+  end
 end
 
 

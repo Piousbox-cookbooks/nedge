@@ -1,4 +1,3 @@
-<%=@original_content%>
 
 # nedge shortcuts
 
@@ -9,11 +8,13 @@ alias r_iodocs="/opt/nedge/src/nmf/nefclient procman restartWorker '{ name: \"io
 alias r_s3="/opt/nedge/src/nmf/nefclient procman restartWorker '{ name: \"ccowgws3\" }'"
 alias r_admin="/opt/nedge/src/nmf/nefclient procman restartWorker '{ name: \"rest\" }'"
 alias r_corosync="/opt/nedge/etc/init.d/corosync restart"
-alias gw_start="rm -rf /data/*/{nameindex,chunks}/* && /opt/nedge/src/ccow/test/cluster_test ; cd /opt/nedge/src/nmf && CCOW_LOG_LEVEL=4 CCOW_LOG_STDOUT=1 ./nefstart -a"
+
 alias k="/opt/nedge/scripts/dev/gw-kill.sh"
-alias rmr="rm -rf /data/ata*/store*/{.device-metadata,parts,hashcount,*} /opt/nedge/var/log/ccow*.log"
+
 alias check="ps aux | grep ccow && ps aux | grep lt"
+
 alias gw_check="/opt/nedge/scripts/dev/gw-check"
+alias gw_start="rm -rf /data/*/{nameindex,chunks}/* && /opt/nedge/src/ccow/test/cluster_test ; cd /opt/nedge/src/nmf && CCOW_LOG_LEVEL=4 CCOW_LOG_STDOUT=1 ./nefstart -a"
 alias gw_start_delayed="/opt/nedge/etc/init.d/corosync restart ; rm -rf /data/*/* ; rm -rf /data/*/.* ; /opt/nedge/src/ccow/test/cluster_test ; cd /opt/nedge/src/nmf && unset CCOW_LOG_STDOUT && CCOW_LOG_LEVEL=4 CCOW_LOG_COLORS=1 CCOW_BENCHMARK_IMMEDIATE_BUCKET_UPDATE=1 NEDGE_ENV=test ./nefstart -a"
 
 echo 167772160 > /proc/sys/net/core/rmem_default
