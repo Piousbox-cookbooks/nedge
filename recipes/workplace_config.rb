@@ -17,15 +17,15 @@ end
 
 # ~/.bashrc
 bashrc_original_content = File.read( "#{user_dir}/.bashrc" )
-if bashrc_original_content.include?( "nedge shortcuts" )
+if bashrc_original_content.include?( "source #{user_dir}/.bashrc-nedge" )
   # do nothing
 else
-  template "#{user_dir}/.bashrc" do
-    source "root/bashrc.erb"
-    variables({
-                :original_content => bashrc_original_content
-              })
+  template "#{user_dir}/.bashrc-nedge" do
+    source "root/bashrc-nedge.erb"
+    variables({})
   end
+  execute "adding .bashrc-nedge to .bashrc" do
+    command ' echo "source #{user_dir}/.bashrc-nedge" >> #{user_dir}/.bashrc '
 end
 
 
