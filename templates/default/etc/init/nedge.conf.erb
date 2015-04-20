@@ -1,0 +1,28 @@
+# nedge - NexentaEdge services
+#
+# NexentaEdge is scale-out Unified Object Storage system.
+
+description	"NexentaEdge services"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+expect daemon
+respawn
+
+env NEDGE_HOME=/opt/nedge
+
+pre-stop script
+	. $NEDGE_HOME/env.sh
+    nefclient auditserv stop
+    nefclient ccowserv stop '{"daemonName":"ccowd"}'
+    nefclient ccowserv stop '{"daemonName":"corosync"}'
+end script
+
+script
+	. $NEDGE_HOME/env.sh
+	start-stop-daemon --start --quiet \
+		--pidfile $NEDGE_HOME/var/run/nefServer.pid \
+		--exec $NEDGE_HOME/nmf/nefstart -- -a
+    sleep 5
+end script
