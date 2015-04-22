@@ -17,3 +17,9 @@ nedge_app['apt_packages'].each do |package_name|
   end
 end
 
+# install all gems
+node['ruby_gems'] && node['ruby_gems'].each do |gem_name|
+  gem_package gem_name do
+    action :install
+  end
+end
