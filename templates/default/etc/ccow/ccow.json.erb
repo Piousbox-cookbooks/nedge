@@ -1,9 +1,12 @@
 {
   "tenant" : {
     "hash_type" : 1,
+    "tenant_cmcache_size": <%= @tenant_cmcache_size %>,
+    "tenant_cmcache_buckets": <%= @tenant_cmcache_buckets %>,
+    "tenant_ucache_size": <%= @tenant_ucache_size %>,
     "failure_domain" : <%= @failure_domain %>,
-    "join_delay" : 10000,
-    "verify_chid" : 1
+    "join_delay" : <%= @join_delay %>,
+    "verify_chid" : <%= @verify_chid %>
   },
   "network" : {
     "broker_interfaces" : "<%= @override_interface %>",

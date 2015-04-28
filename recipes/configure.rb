@@ -32,7 +32,7 @@ nedge_app = data_bag_item 'nexenta', 'nedge'
 path = nedge_app['path']
 path = '/' == path[path.length-1] ? path[0...(path.length-1)] : path # remove final slash
 override_interface = node['nedge']['override_interface'] || 'eth0'
-failure_domain = node['nedge']['failure_domain'] || 0
+failure_domain = node['nedge']['ccow.json']['failure_domain'] || 0
 
 # create storage nodes
 for i in 1..nedge_app['n_devices']
@@ -54,7 +54,12 @@ template "#{path}/etc/ccow/ccow.json" do
   source "etc/ccow/ccow.json.erb"
   variables({
               :failure_domain => failure_domain,
-              :override_interface => override_interface
+              :tenant_cmcache_size => node['nedge']['ccow.json']['tenant_cmcache_size'],
+              :tenant_cmcache_buckets => node['nedge']['ccow.json']['tenant_cmcache_buckets'],
+              :tenant_ucache_size => node['nedge']['ccow.json']['tenant_ucache_size'],
+              :override_interface => override_interface,
+              :verify_chid => node['nedge']['ccow.json']['verify_chid'],
+              :join_delay => node['nedge']['ccow.json']['join_delay']
             })
   owner 'root'
 end
