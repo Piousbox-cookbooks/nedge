@@ -33,13 +33,18 @@ execute "git clone" do
   not_if "test -d #{path}"
 end
 
+execute "git pull" do
+  cwd path
+  command "#{sudo} git pull origin #{nedge_app['branch']}"
+end
+
 # make clean install
 if File.exist?("#{path}/.deploy-dev")
   make_clean = 'make clean'
 else
   make_clean = 'echo \"skipping make clean because file .deploy-dev is absent.\"'
 end
-unless File.exist?( "#{path}/install" )
+if node['nedge']['force_recompile'] || !File.exist?( "#{path}/install" )
   if nedge_app['enable_address_sanitizer']
     execute "make install" do
       cwd path
@@ -50,10 +55,11 @@ unless File.exist?( "#{path}/install" )
       cwd path
       command ". #{path}/env.sh && #{make_clean} && make NEDGE_NDEBUG=1 install"
     end
-    execute "compile ccow" do
-      cwd "#{path}/src/ccow"
-      command ". #{path}/env.sh && ./configure --prefix=#{path} --disable-address-sanitizer && make -j88"
-    end
+    ## the `make install` step already does this.
+    # execute "compile ccow" do
+    #   cwd "#{path}/src/ccow"
+    #   command ". #{path}/env.sh && ./configure --prefix=#{path} --disable-address-sanitizer && make -j88"
+    # end
   end
   execute "#{path}/scripts/dev/nedge-dev-cleanup.sh"
   execute "npm install" do
@@ -62,3 +68,6 @@ unless File.exist?( "#{path}/install" )
   end
 end
 
+execute "echo 0 > /proc/sys/fs/suid_dumpable" do
+  command "echo 0 > /proc/sys/fs/suid_dumpable"
+end
