@@ -42,13 +42,14 @@ for i in 1..nedge_app['n_devices']
   end
 end
 
-template "#{path}/etc/ccow/rt-lfs.json" do
-  source "etc/ccow/rt-lfs.json.erb"
-  variables({
-              :n_devices => nedge_app['n_devices']
-            })
-  owner 'root'
-end
+## This config step turns out to be hella manual. _vp_ 20150428
+# template "#{path}/etc/ccow/rt-lfs.json" do
+#   source "etc/ccow/rt-lfs.json.erb"
+#   variables({
+#               :n_devices => nedge_app['n_devices']
+#             })
+#   owner 'root'
+# end
 
 template "#{path}/etc/ccow/ccow.json" do
   source "etc/ccow/ccow.json.erb"
